@@ -1,0 +1,4 @@
+apache-airflow==2.5.3
+nested-lookup==0.2.25
+more-itertools==9.1.0
+apache-airflow-providers-redis==3.2.0
