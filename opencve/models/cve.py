@@ -96,3 +96,31 @@ class Cve(BaseModel):
         if self.cvss3:
             w += self.cvss3
         return w
+
+    @property
+    def cvss2_score(self):
+        if "cve" in self.json.keys():
+            if "baseMetricV2" in self.json["impact"]:
+                return self.json["impact"]["baseMetricV2"]["cvssV2"]["baseScore"]
+        else:
+            if "cvssMetricV2" in self.json["metrics"]:
+                return self.json["metrics"]["cvssMetricV2"][0]["cvssData"]["baseScore"]
+
+        return None
+
+    @property
+    def cvss3_score(self):
+        if "cve" in self.json.keys():
+            if "baseMetricV3" in self.json["impact"]:
+                return self.json["impact"]["baseMetricV3"]["cvssV3"]["baseScore"]
+        else:
+            if "cvssMetricV30" in self.json["metrics"]:
+                return self.json["metrics"]["cvssMetricV30"][0]["cvssData"]["baseScore"]
+
+        return None
+
+    @property
+    def references(self):
+        if "cve" in self.json.keys():
+            return self.json["cve"]["references"]["reference_data"]
+        return self.json["references"]

@@ -1,0 +1,105 @@
+{
+  "cve": {
+    "data_type": "CVE",
+    "references": {
+      "reference_data": [
+        {
+          "url": "http://www.securityfocus.com/bid/1",
+          "name": "1",
+          "tags": [],
+          "refsource": "BID"
+        },
+        {
+          "url": "http://www.osvdb.org/195",
+          "name": "195",
+          "tags": [],
+          "refsource": "OSVDB"
+        },
+        {
+          "url": "http://www.openwall.com/lists/oss-security/2019/06/05/4",
+          "name": "[oss-security] 20190605 Re: CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit",
+          "tags": [],
+          "refsource": "MLIST"
+        },
+        {
+          "url": "http://www.openwall.com/lists/oss-security/2019/06/06/1",
+          "name": "[oss-security] 20190606 Re: CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit",
+          "tags": [],
+          "refsource": "MLIST"
+        },
+        {
+          "url": "http://seclists.org/fulldisclosure/2019/Jun/16",
+          "name": "20190611 The Return of the WIZard: RCE in Exim (CVE-2019-10149)",
+          "tags": [],
+          "refsource": "FULLDISC"
+        }
+      ]
+    },
+    "data_format": "MITRE",
+    "description": {
+      "description_data": [
+        {
+          "lang": "en",
+          "value": "The debug command in Sendmail is enabled, allowing attackers to execute commands as root."
+        }
+      ]
+    },
+    "problemtype": {
+      "problemtype_data": [
+        {
+          "description": [
+            {
+              "lang": "en",
+              "value": "NVD-CWE-Other"
+            }
+          ]
+        }
+      ]
+    },
+    "data_version": "4.0",
+    "CVE_data_meta": {
+      "ID": "CVE-1999-0095",
+      "ASSIGNER": "cve@mitre.org"
+    }
+  },
+  "impact": {
+    "baseMetricV2": {
+      "cvssV2": {
+        "version": "2.0",
+        "baseScore": 10,
+        "accessVector": "NETWORK",
+        "vectorString": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
+        "authentication": "NONE",
+        "integrityImpact": "COMPLETE",
+        "accessComplexity": "LOW",
+        "availabilityImpact": "COMPLETE",
+        "confidentialityImpact": "COMPLETE"
+      },
+      "severity": "HIGH",
+      "impactScore": 10,
+      "obtainAllPrivilege": true,
+      "exploitabilityScore": 10,
+      "obtainUserPrivilege": false,
+      "obtainOtherPrivilege": false,
+      "userInteractionRequired": false
+    }
+  },
+  "publishedDate": "1988-10-01T04:00Z",
+  "configurations": {
+    "nodes": [
+      {
+        "children": [],
+        "operator": "OR",
+        "cpe_match": [
+          {
+            "cpe23Uri": "cpe:2.3:a:eric_allman:sendmail:5.58:*:*:*:*:*:*:*",
+            "cpe_name": [],
+            "vulnerable": true
+          }
+        ]
+      }
+    ],
+    "CVE_data_version": "4.0"
+  },
+  "lastModifiedDate": "2019-06-11T20:29Z"
+}

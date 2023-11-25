@@ -10,12 +10,12 @@ from opencve.utils import convert_cpes, flatten_vendors
 
 class Cpes(BaseCheck):
     def execute(self):
-        old = nested_lookup("cpe23Uri", self.cve_obj.json["configurations"])
-        new = nested_lookup("cpe23Uri", self.cve_json["configurations"])
+        old_cpes = nested_lookup("criteria", self.cve_obj.json.get("configurations"))
+        new_cpes = nested_lookup("criteria", self.cve_json.get("configurations"))
 
         payload = {
-            "added": list(set(new) - set(old)),
-            "removed": list(set(old) - set(new)),
+            "added": list(set(new_cpes) - set(old_cpes)),
+            "removed": list(set(old_cpes) - set(new_cpes)),
         }
 
         # The CPEs list has been modified
@@ -23,7 +23,7 @@ class Cpes(BaseCheck):
 
             # Change the CVE's vendors attribute
             self.cve_obj.vendors = flatten_vendors(
-                convert_cpes(self.cve_json["configurations"])
+                convert_cpes(self.cve_json.get("configurations", []))
             )
             db.session.commit()
 
