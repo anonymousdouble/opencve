@@ -40,7 +40,7 @@ def cves():
 @main.route("/cve/<cve_id>")
 def cve(cve_id):
     cve = CveController.get({"cve_id": cve_id})
-    vendors = convert_cpes(cve.json.get("configurations", []))
+    vendors = convert_cpes(cve.json.get("configurations", {}))
     cwes = get_cwes_details(cve.json)
 
     # Get the user tags

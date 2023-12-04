@@ -22,13 +22,9 @@ class Cpes(BaseCheck):
         if payload["added"] or payload["removed"]:
 
             # Change the CVE's vendors attribute
-            self.cve_obj.vendors = flatten_vendors(
-                convert_cpes(self.cve_json.get("configurations", []))
-            )
+            vendors_products = convert_cpes(self.cve_json.get("configurations", {}))
+            self.cve_obj.vendors = flatten_vendors(vendors_products)
             db.session.commit()
-
-            # Create the vendors and products objects if they don't exist
-            vendors_products = convert_cpes(payload["added"])
 
             for vendor, products in vendors_products.items():
                 v_obj = Vendor.query.filter_by(name=vendor).first()

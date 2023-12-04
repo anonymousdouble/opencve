@@ -10,10 +10,11 @@ def convert_cpes(conf):
     This function takes an object, extracts its CPE uris and transforms them into
     a dictionnary representing the vendors with their associated products.
     """
-    if isinstance(conf, list):
-        uris = nested_lookup("criteria", conf)
-    else:
-        uris = nested_lookup("cpe23Uri", conf) if not isinstance(conf, list) else conf
+    uris = nested_lookup("criteria", conf)
+
+    # Try old NVD CVE format if no criteria found
+    if not uris:
+        uris = nested_lookup("cpe23Uri", conf)
 
     # Create a list of tuple (vendor, product)
     cpes_t = list(set([tuple(uri.split(":")[3:5]) for uri in uris]))

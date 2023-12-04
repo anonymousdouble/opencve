@@ -75,7 +75,7 @@ def run():
 
                 # Construct CWE and CPE lists
                 cwes = weaknesses_to_flat(cve_data.get("weaknesses"))
-                vendors_products = convert_cpes(cve_data.get("configurations", []))
+                vendors_products = convert_cpes(cve_data.get("configurations", {}))
                 vendors_flatten = flatten_vendors(vendors_products)
 
                 # In case of multiple languages, keep the EN one

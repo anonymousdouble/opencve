@@ -64,7 +64,7 @@ class CveUtil(object):
 
         # Construct CWE and CPE lists
         cwes = weaknesses_to_flat(cve_json.get("weaknesses"))
-        vendors_products = convert_cpes(cve_json.get("configurations", []))
+        vendors_products = convert_cpes(cve_json.get("configurations", {}))
         vendors_flatten = flatten_vendors(vendors_products)
 
         # In case of multiple languages, keep the EN one

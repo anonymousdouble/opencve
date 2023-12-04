@@ -11,8 +11,10 @@ class Cvss(BaseCheck):
 
         # Check the new CVSS scores
         new = {}
-        if "cvssMetricV30" in new_metrics:
-            new["v30"] = new_metrics["cvssMetricV30"][0]["cvssData"]["baseScore"]
+        if "cvssMetricV31" in new_metrics:
+            new["v3"] = new_metrics["cvssMetricV31"][0]["cvssData"]["baseScore"]
+        elif "cvssMetricV30" in new_metrics:
+            new["v3"] = new_metrics["cvssMetricV30"][0]["cvssData"]["baseScore"]
 
         if "cvssMetricV2" in new_metrics:
             new["v2"] = new_metrics["cvssMetricV2"][0]["cvssData"]["baseScore"]
@@ -28,7 +30,7 @@ class Cvss(BaseCheck):
         # Update the CVE
         if old != new:
             self.cve_obj.cvss2 = new.get("v2")
-            self.cve_obj.cvss3 = new.get("v30")
+            self.cve_obj.cvss3 = new.get("v3")
             db.session.commit()
 
             # Create the event with the CVSS changes
