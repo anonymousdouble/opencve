@@ -21,8 +21,10 @@ class Cvss(BaseCheck):
 
         # Retrieve the old CVSS scores
         old = {}
-        if "cvssMetricV30" in old_metrics:
-            old["v30"] = old_metrics["cvssMetricV30"][0]["cvssData"]["baseScore"]
+        if "cvssMetricV31" in old_metrics:
+            old["v3"] = old_metrics["cvssMetricV31"][0]["cvssData"]["baseScore"]
+        elif "cvssMetricV30" in old_metrics:
+            old["v3"] = old_metrics["cvssMetricV30"][0]["cvssData"]["baseScore"]
 
         if "cvssMetricV2" in old_metrics:
             old["v2"] = old_metrics["cvssMetricV2"][0]["cvssData"]["baseScore"]

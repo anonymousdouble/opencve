@@ -16,6 +16,20 @@ NVD_API_URL = "https://services.nvd.nist.gov/rest/json/cves/2.0"
 logger = get_task_logger(__name__)
 
 
+def get_last_cve():
+    cve_id = Meta.query.filter_by(name="nvd_last_cve_id").first().value
+    updated_at = arrow.get(Meta.query.filter_by(name="nvd_last_cve_updated_at").first().value)
+    return cve_id, updated_at
+
+
+def save_last_cve(cve_id, updated_at):
+    meta_last_cve = Meta.query.filter_by(name="nvd_last_cve_id").first()
+    meta_last_cve.value = cve_id
+    meta_last_cve = Meta.query.filter_by(name="nvd_last_cve_updated_at").first()
+    meta_last_cve.value = str(updated_at)
+    db.session.commit()
+
+
 def check_for_update(cve_json, task):
     cve_id = cve_json["id"]
     cve_obj = Cve.query.filter_by(cve_id=cve_id).first()
@@ -57,8 +71,7 @@ def handle_events():
     cel.app.app_context().push()
 
     # Retrieve the last CVE to start the synchronization
-    last_cve_id = Meta.query.filter_by(name="nvd_last_cve_id").first().value
-    last_updated_at = arrow.get(Meta.query.filter_by(name="nvd_last_cve_updated_at").first().value)
+    last_cve_id, last_updated_at = get_last_cve()
 
     logger.info(
         f"Parsing last events since {last_cve_id} (at {last_updated_at})"
@@ -107,8 +120,4 @@ def handle_events():
         time.sleep(6)
 
     # Save the last CVE information for the next handle_events tasks
-    meta_last_cve = Meta.query.filter_by(name="nvd_last_cve_id").first()
-    meta_last_cve.value = last_cve_id
-    meta_last_cve = Meta.query.filter_by(name="nvd_last_cve_updated_at").first()
-    meta_last_cve.value = str(last_updated_at)
-    db.session.commit()
+    save_last_cve(last_cve_id, last_updated_at)

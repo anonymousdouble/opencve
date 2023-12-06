@@ -64,7 +64,7 @@
                                                 <tr>
                                                     <td class="no-bordered">CVSS v3</td>
                                                     {% if change.cve.cvss3_score %}
-                                                    <td class="no-bordered"><span class="label {{ cvss_bg(change.cve.cvss3_score)[1] }} label-cvss">{{ change.cve.cvss3_score }} {{ cve.cvss3_severity }}</span></td>
+                                                    <td class="no-bordered"><span class="label {{ cvss_bg(change.cve.cvss3_score)[1] }} label-cvss">{{ change.cve.cvss3_score }} {{ change.cve.cvss3_severity }}</span></td>
                                                     {% else %}
                                                     <td>--</td>
                                                     {% endif%}
@@ -72,7 +72,7 @@
                                                 <tr>
                                                     <td>CVSS v2</td>
                                                     {% if change.cve.cvss2_score %}
-                                                    <td><span class="label {{ cvss_bg(change.cve.cvss2_score)[1] }} label-cvss">{{ change.cve.cvss2_score }} {{ cve.cvss2_severity }}</span></td>
+                                                    <td><span class="label {{ cvss_bg(change.cve.cvss2_score)[1] }} label-cvss">{{ change.cve.cvss2_score }} {{ change.cve.cvss2_severity }}</span></td>
                                                     {% else %}
                                                     <td>--</td>
                                                     {% endif%}

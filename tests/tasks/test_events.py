@@ -31,7 +31,7 @@ def test_new_cve_detected(handle_events):
     assert len(changes) == 1
     change = changes[0]
     assert change.task.id == task.id
-    assert change.json["cve"]["CVE_data_meta"]["ID"] == "CVE-2018-18074"
+    assert change.json["id"] == "CVE-2018-18074"
 
     # Event has been created
     events = Event.query.all()

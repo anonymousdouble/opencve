@@ -51,16 +51,18 @@ class CveUtil(object):
 
     @classmethod
     def create_cve(cls, cve_json):
-        cvss2 = (
-            cve_json.get("metrics")["cvssMetricV2"][0]["cvssData"]["baseScore"]
-            if "cvssMetricV2" in cve_json.get("metrics")
-            else None
-        )
-        cvss3 = (
-            cve_json.get("metrics")["cvssMetricV30"][0]["cvssData"]["baseScore"]
-            if "cvssMetricV30" in cve_json["metrics"]
-            else None
-        )
+        # Takes the CVSS scores
+        if "cvssMetricV31" in cve_json["metrics"]:
+            cvss3 = cve_json.get("metrics")["cvssMetricV31"][0]["cvssData"]["baseScore"]
+        elif "cvssMetricV30" in cve_json["metrics"]:
+            cvss3 = cve_json.get("metrics")["cvssMetricV30"][0]["cvssData"]["baseScore"]
+        else:
+            cvss3 = None
+
+        if "cvssMetricV2" in cve_json.get("metrics"):
+            cvss2 = cve_json.get("metrics")["cvssMetricV2"][0]["cvssData"]["baseScore"]
+        else:
+            cvss2 = None
 
         # Construct CWE and CPE lists
         cwes = weaknesses_to_flat(cve_json.get("weaknesses"))
