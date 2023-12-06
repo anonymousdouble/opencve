@@ -27,15 +27,15 @@
             <div class="nav-tabs-custom nav-tabs-primary">
                 <ul class="nav nav-tabs">
                     {% if cve.cvss3_score %}
-                    <li class="active"><a href="#cvss3" data-toggle="tab">CVSS v3.0 <span
-                            class="label {{ cvss_bg(cve.cvss3_score)[1] }} label-cvss">{{ cve.cvss3_score }} TOCHANGE</span></a>
+                    <li class="active"><a href="#cvss3" data-toggle="tab">CVSS v3 <span
+                            class="label {{ cvss_bg(cve.cvss3_score)[1] }} label-cvss">{{ cve.cvss3_score }} {{ cve.cvss3_severity }}</span></a>
                     </li>
                     {% endif %}
                     {% if cve.cvss2_score %}
                     <li {% if not cve.cvss3_score %}class="active" {% endif %}><a href="#cvss2"
                                                                                                data-toggle="tab">CVSS
                         v2.0 <span
-                                class="label {{ cvss_bg(cve.cvss2_score)[1] }} label-cvss">{{ cve.cvss2_score }} TOCHANGE</span></a>
+                                class="label {{ cvss_bg(cve.cvss2_score)[1] }} label-cvss">{{ cve.cvss2_score }} {{ cve.cvss2_severity }}</span></a>
                     </li>
                     {% endif %}
                 </ul>

@@ -62,16 +62,18 @@ def run():
                 cve_data = vulnerability.get("cve")
                 cve_id = cve_data["id"]
 
-                cvss2 = (
-                    cve_data.get("metrics")["cvssMetricV2"][0]["cvssData"]["baseScore"]
-                    if "cvssMetricV2" in cve_data.get("metrics")
-                    else None
-                )
-                cvss3 = (
-                    cve_data.get("metrics")["cvssMetricV30"][0]["cvssData"]["baseScore"]
-                    if "cvssMetricV30" in cve_data["metrics"]
-                    else None
-                )
+                # Takes the CVSS scores
+                if "cvssMetricV31" in cve_data["metrics"]:
+                    cvss3 = cve_data.get("metrics")["cvssMetricV31"][0]["cvssData"]["baseScore"]
+                elif "cvssMetricV30" in cve_data["metrics"]:
+                    cvss3 = cve_data.get("metrics")["cvssMetricV30"][0]["cvssData"]["baseScore"]
+                else:
+                    cvss3 = None
+
+                if "cvssMetricV2" in cve_data.get("metrics"):
+                    cvss2 = cve_data.get("metrics")["cvssMetricV2"][0]["cvssData"]["baseScore"]
+                else:
+                    cvss2 = None
 
                 # Construct CWE and CPE lists
                 cwes = weaknesses_to_flat(cve_data.get("weaknesses"))
