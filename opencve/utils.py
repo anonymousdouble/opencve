@@ -61,7 +61,7 @@ def get_cwes_details(cve_json):
     if "cve" in cve_json:
         problems = cve_json["cve"]["problemtype"]["problemtype_data"][0]["description"]
     else:
-        problems = cve_json["weaknesses"]
+        problems = cve_json.get("weaknesses")
 
     cwes = {}
     for cwe_id in weaknesses_to_flat(problems):
